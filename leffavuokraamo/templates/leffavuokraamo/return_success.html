@@ -1,0 +1,22 @@
+{% extends "leffavuokraamo/base.html" %}
+{% block navibar %}
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a class="active" href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+    {% else %}
+    <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+    <a class="active" href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+    <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+    <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+    <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+{% block content %}
+<h1 class="h1_style">Elokuva {{ film }} on palautettu</h2>
+<div class="listaus">
+    <a href="{% url 'leffavuokraamo:movies' %}">Selaa elokuvia</a><br>
+    <a href="{% url 'leffavuokraamo:user' %}">Takaisin omille sivuille</a>
+</div>
+{% endblock %}

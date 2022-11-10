@@ -1,0 +1,48 @@
+{% extends "leffavuokraamo/base.html" %}
+
+{% block navibar%}
+
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a class="active" href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+{% comment %} <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+    {% else %}
+    <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+    <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+    <a class="active" href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+    <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+    <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="h1_style">Muokkaa profiilia</h1>
+<br/><br/>
+
+<form method="post">
+        {% csrf_token %}
+
+            <div class="cont">
+                {{form.as_p}}
+            
+                <br></br>
+            </div>
+    
+  
+    <button type="submit">Päivitä tiedot</button>
+
+    
+
+
+</form>
+
+    
+
+{% endblock %}
+
+
+
+ 

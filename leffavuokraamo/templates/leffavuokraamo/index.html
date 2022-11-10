@@ -1,0 +1,153 @@
+<!-- PÄÄSIVU -->
+<!DOCTYPE html>
+
+<html lang = "fi">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lainakooderien elokuvavuokraamo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lainakooderien elokuvavuokraamo">
+    <meta name="keywords" content="elokuva,leffa,vuokra,leffailta,elokuvailta">
+    <meta name="author" content="Lainakooderit - INTIM21A6">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'leffavuokraamo/style.css'%}">
+</head>
+
+
+
+
+
+<body>
+
+    <!-- Otsikkokuva (HEADER) -->
+    <div class="otsikkoalue">{% block header %}
+        <img src="{% static 'leffavuokraamo/header_1.jpg' %}" alt="Leffavuokraamo" class="otsikkokuva">
+        <img src="{% static 'leffavuokraamo/header_2.jpg' %}" alt="Leffavuokraamo" class="otsikkokuvapieni">
+        {% endblock %}
+    </div>
+
+    <!-- NAVIGOINTIPALKKI -->
+    <nav class="navigoi">{% block navibar %}
+        
+        {% if user.is_authenticated %}
+        <a class="active" href= "{% url 'leffavuokraamo:index' %}">Etusivu</a>
+        <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+        <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+        {% comment %} <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+        <a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+            {% else %}
+            <a class="active" href= "{% url 'leffavuokraamo:index' %}">Etusivu</a>
+            <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+            <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+            <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+            <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+
+        {% endif %}
+        {% endblock %}
+    </nav>
+
+
+
+
+    <!-- Sisältöalue-->
+    <div class= "sisältöalue">{% block content %}
+        <h1 class="h1_style">Tervetuloa elokuvien vuokrauspalveluun</h1>
+        {% endblock %}
+    </div>
+
+
+    <!-- Slideshow container -->
+        <div class="slideshow-container">{% block slideshow %}
+
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+            <div class="numbertext">1 / 6</div>
+            <a href="/leffavuokraamo/movies/14">
+            <img src="/media/images/60seconds.jpg" style="width:100%"></a>
+            </div>
+        
+            <div class="mySlides fade">
+            <div class="numbertext">2 / 6</div>
+            <a href="/leffavuokraamo/movies/5">
+            <img src="/media/images/ghostprotocol.jpg" style="width:100%"></a>
+            </div>
+        
+            <div class="mySlides fade">
+            <div class="numbertext">3 / 6</div>
+            <a href="/leffavuokraamo/movies/6">
+            <img src="/media/images/forceawakens.jpg" style="width:100%"></a>
+            </div>
+
+            <div class="mySlides fade">
+            <div class="numbertext">4 / 6</div>
+            <a href="/leffavuokraamo/movies/21">
+            <img src="/media/images/Napapiirin_Sankarit.jpg" style="width:100%"></a>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">5 / 6</div>
+                <a href="/leffavuokraamo/movies/18">
+                <img src="/media/images/revenge.jpg" style="width:100%"></a>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">6 / 6</div>
+                <a href="/leffavuokraamo/movies/12">
+                <img src="/media/images/lohikaarme.jpg" style="width:100%"></a>
+            </div>
+                
+        
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+        
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+        </div>
+          {% endblock %}  
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+        
+        function showSlides() {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}    
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";  
+          dots[slideIndex-1].className += " active";
+          setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+        </script>
+
+    <div class ="allekirjoitus">
+        <p class ="allekirjoitusteksti">Harjoitustyö Web-ohjelmointi - Lainakooderit / INTIM21A6 /{% block adminsite %}<a href="admin/"> 2022</a>{% endblock %}</p>
+    </div>
+
+
+
+
+</body>
+
+
+</html>

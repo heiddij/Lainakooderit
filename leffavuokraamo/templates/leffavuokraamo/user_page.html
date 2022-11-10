@@ -1,0 +1,51 @@
+{% extends "leffavuokraamo/base.html" %}
+
+{% block navibar%}
+
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a class="active" href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+{% comment %} <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+    {% else %}
+    <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+    <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+    <a class="active" href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+    <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+    <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1 class="h1_style">Käyttäjän {{ user }} omat sivut</h1>
+{% if user.is_authenticated %}
+<h2 class="h1_style"><a href="{% url 'leffavuokraamo:edit_profile' %}">Muokkaa omia tietoja</a></h2>
+    {% for message in messages%}
+        {{ message }}
+    {% endfor %}
+{% endif %}
+<div class="listaus">
+    {% if rentals %}
+    <br><h2>Vuokratut elokuvat:</h2><br>
+    {% for rental in rentals%}
+    <h3>{{ rental.film }}</h3>
+    <p>Vuokrauspäivä: {{ rental.rental_date|date:"j.n.Y" }}</p>
+    <p>Viimeinen palautuspäivä: {{ rental.last_return_date|date:"j.n.Y" }}</p>
+    {% if rental.is_active == True %}
+    <p>Tila: VUOKRATTU</p>
+    <p><p><a href="{% url 'leffavuokraamo:return_movie' rental.id %}">Palauta elokuva</a></p>
+    {% else %}
+    <p>Tila: PALAUTETTU {{ rental.date_returned|date:"j.n.Y" }}</p>
+    {% endif %}
+    <br><br>
+    {% endfor %}
+    {% else %}
+    <p>Sinulla ei ole vuokrattuja elokuvia.</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block adminsite %}
+<p class = "allekirjoitusteksti">2022</p>
+{% endblock %}

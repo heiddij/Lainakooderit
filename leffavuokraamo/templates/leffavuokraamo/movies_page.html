@@ -1,0 +1,82 @@
+{% extends "leffavuokraamo/base.html" %}
+
+{% block navibar %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a class="active" href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+{% comment %} <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+    {% else %}
+    <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+    <a class="active" href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+    <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+    <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+    <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1 class="h1_style">Leffalista</h1>
+<form action="" method="get"> 
+    <div class="haku">
+        <label for="word">Hae leffoja nimellä, genrellä tai tagilla:</label>
+        <input type="text" id="word" name="word" size="40" autofocus>
+        <input class="button" type="submit" value="Hae">
+    </div>
+    <output>
+        {% if results %}
+        <table class="leffalista">
+            <tr>
+                <th class="leffat"><h2>Leffat<h2></th>
+                <th class="julkaisuvuosi"><h2>Julkaisuvuosi<h2></th>
+                <th class="kieli"><h2>Kieli<h2></th>
+                <th class="tila"><h2>Tila<h2></th>
+            </tr>
+            {% for film in results %}
+            <tr>
+                <td><a href="movies/{{ film.id }}">{{ film.title }}</a></td>
+                <td>{{ film.release_date.year }}</td>
+                <td>{{ film.language }}</td>
+                {% if film.is_loaned == True %}
+                    <td style="color:red">Vuokrattuna</td>
+                {% else %}
+                <td>Vapaana</td>
+                {% endif %}
+            {% endfor %}
+            {% endif %}
+            </tr>
+        </table>
+    </output>
+</form>
+{% if all_films %}
+<table class="leffalista">
+    <tr>
+        <th class="leffat"><h2>Leffat<h2></th>
+        <th class="julkaisuvuosi"><h2>Julkaisuvuosi<h2></th>
+        <th class="kieli"><h2>Kieli<h2></th>
+        <th class="tila"><h2>Tila<h2></th>
+    </tr>
+    {% for film in all_films %}
+    <tr>
+        <td><a href="movies/{{ film.id }}">{{ film.title }}</a></td>
+        <td>{{ film.release_date.year }}</td>
+        <td>{{ film.language }}</td>
+        {% if film.is_loaned == True %}
+            <td class="punainen">Vuokrattuna</td>
+        {% else %}
+        <td>Vapaana</td>
+        {% endif %}
+    {% endfor %}
+    </tr>
+</table>
+{% endif %}
+{% if all_films|length < 1 and results|length < 1 %}
+    <p class="haku">Leffoja ei löytynyt.</p>
+{% endif %}
+{% endblock %}
+
+{% block adminsite %}<p class = "allekirjoitusteksti">2022</p>
+{% endblock %}
+

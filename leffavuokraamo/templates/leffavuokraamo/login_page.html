@@ -1,0 +1,74 @@
+{% extends "leffavuokraamo/base.html" %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h2 class="h1_style">Käyttäjä kirjautunut: {{ user }}</h2>
+    <h2 class="h1_style"><a href="{% url 'logout' %}">Kirjaudu ulos</a></h2>
+{% else %}
+    <h1 class="h1_style">Kirjaudu sisään</h1>
+    <h2 class="h1_style">Sinun täytyy ensin kirjautua sisään, jotta voit vuokrata elokuvia</h2>
+    <div class="cont">
+        {% if messages %}
+            {% for message in messages %}
+            
+                {{ message }}
+                
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        
+            
+            
+            <div class="cont">
+              <label for="exampleInputEmail1" class="form-label">Käyttäjätunnus: </label>
+              <input type="text" class="form-control" name="käyttäjätunnus" aria-describedby="emailHelp">
+             
+            </div>
+            <div class="cont">
+              <label for="exampleInputPassword1" class="form-label">Salasana: </label>
+              <input type="password" class="form-control" name="salasana">
+            </div>
+            
+        
+        <button class="painike">Kirjaudu sisään</button>
+    </form>
+    
+    <h2 class="h1_style">Jos sinulla ei ole vielä käyttäjätunnusta, <a href="{% url 'leffavuokraamo:registeration' %}">luo uusi käyttäjä</a></h2>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block navibar %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+{% comment %} <a class="active" href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+
+    {% else %}
+        <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+        <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+        <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+        <a class="active" href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+        <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+
+
+{% block slideshow %}
+{% endblock %}
+
+{% block adminsite %}
+<p class = "allekirjoitusteksti">2022</p>
+{% endblock %}

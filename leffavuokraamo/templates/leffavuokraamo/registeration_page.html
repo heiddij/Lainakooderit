@@ -1,0 +1,60 @@
+{% extends "leffavuokraamo/base.html" %}
+
+
+  
+
+ {% block content %}
+ <h1 class="h1_style">Rekisteröityminen</h1>
+ 
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+    
+    <div class="cont">
+        {{form.as_p}}
+    </div>
+   
+    
+    
+  
+  
+  <button type="submit">Luo käyttäjätunnus</button>
+
+</form>
+ 
+{% endblock %}
+
+
+
+
+
+
+
+
+
+ 
+
+  
+
+{% block navibar %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+<a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+<a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+<a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+  {% else %}
+  <a href="{% url 'leffavuokraamo:index' %}">Etusivu</a>
+  <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+  <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+  <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+  <a class="active" href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+{% endif %}
+{% endblock %}
+
+{% block slideshow %}
+{% endblock %}
+
+{% block adminsite %}
+<p class = "allekirjoitusteksti">2022</p>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% load static %}<!DOCTYPE html>
+<html lang = "fi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Lainakooderien elokuvavuokraamo">
+        <meta name="keywords" content="elokuva,leffa,vuokra,leffailta,elokuvailta">
+        <meta name="author" content="Lainakooderit - INTIM21A6">
+        <link rel="stylesheet" href="{% static 'leffavuokraamo/style.css'%}">
+        <title>{% block title %}Lainakooderien elokuvavuokraamo{% endblock %}</title>
+    </head>
+    <body>
+        {% block body %}
+        <!-- Otsikkokuva (HEADER) -->
+        <div class="otsikkoalue">{% block header %}
+            <img src="{% static 'leffavuokraamo/header_1.jpg' %}" alt="Leffavuokraamo" class="otsikkokuva">
+            <img src="{% static 'leffavuokraamo/header_2.jpg' %}" alt="Leffavuokraamo" class="otsikkokuvapieni">
+            {% endblock %}
+        </div>
+
+        <!-- NAVIGOINTIPALKKI -->
+        <nav class="navigoi">{% block navibar %}
+            
+            {% if user.is_authenticated %}
+            <a class="active">Etusivu</a>
+            <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+            <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+            {% comment %} <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a> {% endcomment %}
+            <a href="{% url 'leffavuokraamo:logout' %}">Kirjaudu ulos</a>
+                {% else %}
+                <a class="active">Etusivu</a>
+                <a href="{% url 'leffavuokraamo:movies' %}">Leffat</a>
+                <a href="{% url 'leffavuokraamo:user' %}">Omat sivut</a>
+                <a href="{% url 'leffavuokraamo:login' %}">Kirjaudu</a>
+                <a href="{% url 'leffavuokraamo:registeration' %}">Rekisteröidy</a>
+
+            {% endif %}
+            
+            {% endblock %}
+        </nav>
+
+        <!-- Sisältöalue-->
+        {% block content %}
+        {% endblock %}
+        {% block footer %}
+        <div class ="allekirjoitus">
+            <p class ="allekirjoitusteksti">Harjoitustyö Web-ohjelmointi - Lainakooderit / INTIM21A6 /{% block adminsite %}<a href="admin/"> 2022</a>{% endblock %}</p>
+        </div>
+        {% endblock footer %}
+        {% endblock body %}
+    </body>
+</html>
