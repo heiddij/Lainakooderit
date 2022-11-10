@@ -1,4 +1,4 @@
-### Lainakooderien elokuvavuokraamo
+# Lainakooderien elokuvavuokraamo
 Koulun ryhmätyö, jossa toteutettiin elokuvien lainausjärjestelmäsovellus. Projekti on toteutettu Python-kielellä ja Django-sovelluskehyksellä. 
 Projektin ulkoasussa on käytetty HTML5-merkintäkieltä ja CSS:sää.
 
